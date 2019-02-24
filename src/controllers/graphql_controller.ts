@@ -1,5 +1,5 @@
 import { Controller, HTTP_METHOD, MIME_TYPE, jsonResult, HttpResult, renderView, htmlResult, HTTP_STATUS_CODE, viewResult, textResult } from "fortjs";
-import { GraphQLSchema, graphql, GraphQLError } from "graphql";
+import { GraphQLSchema, graphql, GraphQLError, buildSchema } from "graphql";
 import { GraphQLParams } from "../types/graphql_params";
 import { GraphQlOption } from "../types/graphql_option";
 import { getGraphiQlView } from "../helpers/get_view";
@@ -10,6 +10,13 @@ export class FortGraphQl extends Controller {
     enableGraphiql: boolean = false;
     context: any;
     errorFormatter: (error: GraphQLError) => any;
+
+    constructor(schema?: string) {
+        super();
+        if (schema != null) {
+            this.schema = buildSchema(schema);
+        }
+    }
 
     async getGraphiqlUi() {
         return htmlResult(getGraphiQlView(), 200);
