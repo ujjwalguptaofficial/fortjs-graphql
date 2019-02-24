@@ -1,0 +1,42 @@
+{
+  "name": "fort-starter",
+  "version": "1.0.0",
+  "description": "Starter project for fortjs using typescript",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack --config webpack.config.js",
+    "webpack:watch": "webpack --config webpack.config.js --watch",
+    "lint": "tslint src/**/*.ts",
+    "build": "npm run webpack",
+    "start": "npm run webpack:watch && opn http://localhost:4000",
+    "install:lib": "npm i ../fort-graphql-1.0.0.tgz",
+    "install:build": "npm run install:lib && npm run webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ujjwalguptaofficial/fortjs-typescript-starter.git"
+  },
+  "author": "Ujjwal Gupta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter/issues"
+  },
+  "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
+  "dependencies": {
+    "eshtml": "^0.2.1",
+    "fort-graphql": "file:../fort-graphql-1.0.0.tgz",
+    "fortjs": "^1.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.15",
+    "graphql-request": "^1.8.2",
+    "nodemon-webpack-plugin": "^4.0.6",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.11.0",
+    "tslint-config-security": "^1.13.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
