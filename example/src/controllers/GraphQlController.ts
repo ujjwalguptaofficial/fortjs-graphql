@@ -10,22 +10,14 @@ export class GraphQlController extends FortGraphQl {
         }
       `);
 
-    constructor() {
-        super();
-    }
-
     @DefaultWorker([HTTP_METHOD.Get, HTTP_METHOD.Post])
     async  default() {
-        return this.graphqlWorker();
+        return this.processGraphQl();
     }
 
     @Worker()
     async  graphiql() {
-        return this.graphiqlWorker();
+        return this.getGraphiqlUi();
     }
 
-    @Worker()
-    async test() {
-        return textResult("fg");
-    }
 }
