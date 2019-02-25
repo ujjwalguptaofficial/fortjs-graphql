@@ -1,5 +1,6 @@
  const {
-     request
+     request,
+     expect
  } = require('./common');
 
  describe('student test', () => {
@@ -13,8 +14,35 @@
              "id": 1
          }
 
-         request(query, variables).then(results => {
-             console.log(results);
+         request.query(query, variables, (response) => {
+
+         }).then(results => {
+             expect(results.data).to.be.an('object');
+             expect(results.data.student).to.be.an('object');
+             expect(results.data.student.name).to.be.an('string').equal('Alfreds')
+             done();
          }).catch(done);
      });
+
+     it('get Students', (done) => {
+         const query = `query getStudents($country: String!) {
+           students (country: $country) {
+                name
+           }
+       }`
+         const variables = {
+             "country": 'Canada'
+         }
+
+         request.query(query, variables, (response) => {
+
+         }).then(results => {
+             console.log(results);
+             expect(results.data).to.be.an('object');
+             expect(results.data.students).to.be.an('array').length(1);
+             expect(results.data.students[0].name).to.be.an('string').equal('Eastern')
+             done();
+         }).catch(done);
+     });
+
  });
