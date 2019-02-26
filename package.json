@@ -1,5 +1,5 @@
 {
-    "name": "fort-graphql",
+    "name": "fortjs-graphql",
     "version": "1.0.0",
     "description": "",
     "types": "build/ts/index.d.ts",
@@ -9,6 +9,8 @@
         "build": "npm run webpack",
         "build:pack": "npm run build && npm pack"
     },
+    "displayName": "FortJs-GraphQl",
+    "keywords": ["graphql", "fortjs", "typescript", "node", "es6"],
     "author": "Ujjwal Gupta",
     "license": "ISC",
     "devDependencies": {

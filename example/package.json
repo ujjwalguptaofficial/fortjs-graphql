@@ -24,7 +24,7 @@
   "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
   "dependencies": {
     "eshtml": "^0.2.1",
-    "fort-graphql": "file:../fort-graphql-1.0.0.tgz",
+    "fort-graphql": "^1.0.0",
     "fortjs": "^1.5.1"
   },
   "devDependencies": {
