@@ -1,7 +1,8 @@
 export const graphqlSchema = `
 type Query {
-  student(id: Int!): Student
-  studentsByContry(country: String): [Student]
+  student(id: Int!): Student,
+  studentsByContry(country: String): [Student],
+  students : [Student]
 },
 type Student {
   id: Int,

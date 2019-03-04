@@ -39,4 +39,8 @@ export class StudentService {
         }
         return []
     }
+
+    get students() {
+        return students;
+    }
 }

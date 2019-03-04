@@ -12,8 +12,10 @@ var getStudents = function (args) {
 
 export const resolver = {
     student: getStudent,
+    students: function () {
+        return new StudentService().students;
+    },
     studentsByContry: function ({ country }) {
-        console.log("hitted", country);
         return new StudentService().getStudentsByCountry(country);
     }
 };

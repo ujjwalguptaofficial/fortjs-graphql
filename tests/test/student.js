@@ -24,6 +24,24 @@
          }).catch(done);
      });
 
+     it('get Students ', (done) => {
+         const query = `query   {
+            students  {
+                 name
+            }
+        }`
+
+
+         request.query(query, null, (response) => {
+
+         }).then(results => {
+             console.log(results);
+             expect(results.data).to.be.an('object');
+             expect(results.data.students).to.be.an('array').length(4);
+             done();
+         }).catch(done);
+     });
+
      it('get Students by country', (done) => {
          const query = `query getStudents($country: String!) {
             studentsByContry (country: $country) {
