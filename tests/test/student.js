@@ -24,9 +24,9 @@
          }).catch(done);
      });
 
-     it('get Students', (done) => {
+     it('get Students by country', (done) => {
          const query = `query getStudents($country: String!) {
-           students (country: $country) {
+            studentsByContry (country: $country) {
                 name
            }
        }`
@@ -39,8 +39,8 @@
          }).then(results => {
              console.log(results);
              expect(results.data).to.be.an('object');
-             expect(results.data.students).to.be.an('array').length(1);
-             expect(results.data.students[0].name).to.be.an('string').equal('Eastern')
+             expect(results.data.studentsByContry).to.be.an('array').length(1);
+             expect(results.data.studentsByContry[0].name).to.be.an('string').equal('Eastern')
              done();
          }).catch(done);
      });

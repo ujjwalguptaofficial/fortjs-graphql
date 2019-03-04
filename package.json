@@ -1,7 +1,7 @@
 {
     "name": "fortjs-graphql",
-    "version": "1.0.0",
-    "description": "",
+    "version": "1.0.1",
+    "description": "GraphQl module for fortjs",
     "types": "build/ts/index.d.ts",
     "main": "build/app.dev.js",
     "scripts": {

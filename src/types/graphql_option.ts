@@ -1,10 +1,9 @@
-import { GraphQLError, ASTVisitor, GraphQLFieldResolver, GraphQLSchema } from 'graphql';
-import { GraphQlRequestInfo } from './graphql_request_info';
+import { GraphQLError, GraphQLSchema } from 'graphql';
 
 export type GraphQlOption = {
     schema: GraphQLSchema;
-    rootValue: any;
-    enableGraphiql?: boolean;
+
+    resolver: any;
 
     /**
      * A value which is provided to every resolver and holds important contextual 

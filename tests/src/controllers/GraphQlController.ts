@@ -1,22 +1,15 @@
 import { HTTP_METHOD, DefaultWorker, Worker } from "fortjs";
-import { FortGraphQl } from "fort-graphql";
-import { graphqlSchema } from "../graphql/graphql_schema";
-import { root } from "../graphql/graphql_root";
- 
+import { GraphQlHelper } from "fortjs-graphql";
 
-export class GraphQlController extends FortGraphQl {
-    rootValue = root;
 
-    constructor() {
-        super(graphqlSchema);
-    }
+export class GraphQlController extends GraphQlHelper {
 
     /**
-     * This method will be used to process graphql query 
-     *
-     * @returns
-     * @memberof GraphQlController
-     */
+    * This method will be used to process graphql query 
+    *
+    * @returns
+    * @memberof GraphQlController
+    */
     @DefaultWorker([HTTP_METHOD.Get, HTTP_METHOD.Post])
     async  default() {
         return this.processGraphQl();

@@ -1,43 +1,32 @@
 import { Controller, HTTP_METHOD, MIME_TYPE, jsonResult, HttpResult, renderView, htmlResult, HTTP_STATUS_CODE, viewResult, textResult } from "fortjs";
-import { GraphQLSchema, graphql, GraphQLError, buildSchema } from "graphql";
+import { graphql } from "graphql";
 import { GraphQLParams } from "../types/graphql_params";
-import { GraphQlOption } from "../types/graphql_option";
 import { getGraphiQlView } from "../helpers/get_view";
+import { Global } from "../global";
 
-export class FortGraphQl extends Controller {
-    schema: GraphQLSchema;
-    rootValue: any;
-    enableGraphiql: boolean = false;
-    context: any;
-    errorFormatter: (error: GraphQLError) => any;
-
-    constructor(schema?: string) {
-        super();
-        if (schema != null) {
-            this.schema = buildSchema(schema);
-        }
-    }
+export class GraphQlHelper extends Controller {
 
     async getGraphiqlUi() {
         return htmlResult(getGraphiQlView(), 200);
     }
 
-    async   processGraphQl() {
+    async  processGraphQl() {
         try {
             const queryData = this.request.method === HTTP_METHOD.Post ? this.body : this.query;
             const params = this.getGraphQLParams_(queryData);
+            const option = Global.graphQlOptionValue;
             const result = await graphql(
-                this.schema,
+                option.schema,
                 params.query,
-                this.rootValue,
-                this.context,
+                option.resolver,
+                option.context,
                 params.variables,
                 params.operationName
             );
             // Format any encountered errors.
             if (result.errors) {
-                if (this.errorFormatter != null) {
-                    result.errors = result.errors.map(this.errorFormatter);
+                if (option.errorFormatter != null) {
+                    result.errors = result.errors.map(option.errorFormatter);
                 }
                 return jsonResult(result, HTTP_STATUS_CODE.BadRequest);
             }
@@ -65,13 +54,13 @@ export class FortGraphQl extends Controller {
             try {
                 variables = JSON.parse(variables);
             } catch (error) {
-                Promise.reject(
+                return Promise.reject(
                     {
                         contentType: MIME_TYPE.Text,
                         statusCode: HTTP_STATUS_CODE.BadRequest,
                         responseData: 'Variables are invalid JSON.'
                     } as HttpResult
-                );
+                ) as any;
             }
         } else if (typeof variables !== 'object') {
             variables = null;

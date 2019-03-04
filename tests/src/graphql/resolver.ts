@@ -10,7 +10,10 @@ var getStudents = function (args) {
     return new StudentService().getStudentsByCountry(country);
 };
 
-export const root = {
+export const resolver = {
     student: getStudent,
-    students: getStudents
+    studentsByContry: function ({ country }) {
+        console.log("hitted", country);
+        return new StudentService().getStudentsByCountry(country);
+    }
 };
