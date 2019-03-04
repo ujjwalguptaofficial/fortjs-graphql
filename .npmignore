@@ -4,8 +4,7 @@ logos
 node_modules
 src
 tests
-build
-
+ 
 #build tools
 .travis.yml
 .vscode
