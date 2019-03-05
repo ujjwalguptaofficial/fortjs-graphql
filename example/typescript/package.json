@@ -8,9 +8,7 @@
     "webpack:watch": "webpack --config webpack.config.js --watch",
     "lint": "tslint src/**/*.ts",
     "build": "npm run webpack",
-    "start": "npm run webpack:watch && opn http://localhost:4000",
-    "install:lib": "npm i ../fort-graphql-1.0.0.tgz",
-    "install:build": "npm run install:lib && npm run webpack"
+    "start": "npm run webpack:watch && opn http://localhost:4000"
   },
   "repository": {
     "type": "git",
@@ -23,8 +21,7 @@
   },
   "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
   "dependencies": {
-    "eshtml": "^0.2.1",
-    "fort-graphql": "^1.0.0",
+    "eshtml": "^0.2.2",
     "fortjs": "^1.5.1"
   },
   "devDependencies": {

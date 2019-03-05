@@ -1,20 +1,7 @@
 import { HTTP_METHOD, DefaultWorker, Worker } from "fortjs";
-import { FortGraphQl } from "fort-graphql";
-import { graphqlSchema } from "../graphql_schema";
-import { GraphQLError } from "graphql";
+import { GraphQlHelper } from "fortjs-graphql";
 
-
-export class GraphQlController extends FortGraphQl {
-    rootValue = { hello: () => 'Hello world!' };
-
-    errorFormatter = function (error: GraphQLError) {
-        // format the error and return it
-        return error;
-    }
-
-    constructor() {
-        super(graphqlSchema);
-    }
+export class GraphQlController extends GraphQlHelper {
 
     /**
      * This method will be used to process graphql query 
