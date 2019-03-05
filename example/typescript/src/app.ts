@@ -3,7 +3,6 @@ import { routes } from './routes';
 import { FortViewEngine } from 'eshtml';
 import * as path from "path";
 import { FortGraphQl } from 'fortjs-graphql';
-import { graphqlSchema } from './graphql_schema';
 import { GraphQLError, buildSchema } from 'graphql';
 
 export class App extends Fort {
@@ -29,7 +28,11 @@ new App().create({
             // format the error and return it
             return error;
         },
-        schema: buildSchema(graphqlSchema),
+        schema: buildSchema(`
+        type Query {
+          hello: String
+        }
+        ` ),
         resolver: { hello: () => 'Hello world!' }
     })
 }).catch(err => {

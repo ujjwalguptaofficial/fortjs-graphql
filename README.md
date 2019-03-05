@@ -6,26 +6,15 @@ GraphQl module for fortjs
 # Uses
 
 1. `npm i fortjs-graphql` or `yarn add fortjs-graphql`
-2. Create a controller and inherit `FortGraphQl` 
+2. Create a controller and inherit `GraphQlHelper` 
    *  Create a default worker and call `processGraphQl` inside it. 
    *  For graphiql , create another worker and call `getGraphiqlUi` inside it.
-
 ```
 import { HTTP_METHOD, DefaultWorker, Worker } from "fortjs";
-import { FortGraphQl } from "fort-graphql";
-export const graphqlSchema = `
-type Query {
-  hello: String
-}
-`;
+import { GraphQlHelper } from "fort-graphql";
 
-export class GraphQlController extends FortGraphQl {
-    rootValue = { hello: () => 'Hello world!' };
-
-    constructor() {
-        super(graphqlSchema);
-    }
-
+export class GraphQlController extends GraphQlHelper {
+    
     /**
      * This method will be used to process graphql query 
      *
@@ -50,52 +39,60 @@ export class GraphQlController extends FortGraphQl {
 
 }
 ``` 
+3. Add the controller into routes 
+4. Initiate the graphql, where you have bootstrapped your app. By default file is app.ts/app.js - 
+
+```
+import { Fort } from 'fortjs';
+import { routes } from './routes';
+import { FortViewEngine } from 'eshtml';
+import * as path from "path";
+import { FortGraphQl } from 'fortjs-graphql';
+import { GraphQLError, buildSchema } from 'graphql';
+
+export class App extends Fort {
+    constructor() {
+        super();
+        this.routes = routes;
+        this.viewEngine = FortViewEngine;
+    }
+}
+
+new App().create({
+    defaultPath: "default" 
+}).then(() => {
+    console.log("Your fort is located at address - localhost:4000");
+    // setup graphql
+
+    new FortGraphQl().initiate({
+        schema: buildSchema(`
+        type Query {
+          hello: String
+        }
+        ` ),
+        resolver: { hello: () => 'Hello world!' }
+    })
+}).catch(err => {
+    console.error(err);
+})
+```
+
 
 # Options
-
-### Bulit schema can be provided by using `schema` property -
-
-```
-import { HTTP_METHOD, DefaultWorker, Worker } from "fortjs";
-import { FortGraphQl } from "fort-graphql";
-import { buildSchema } from "graphql";
-export const graphqlSchema = `
-type Query {
-  hello: String
-}
-`;
-
-export class GraphQlController extends FortGraphQl {
-    rootValue = { hello: () => 'Hello world!' };
-
-    // schema 
-    schema = buildSchema(graphqlSchema);
- 
- }
-```
 
 ### Errors can be formatted by using `errorFormatter` property.   
 
 ```
-import { HTTP_METHOD, DefaultWorker, Worker } from "fortjs";
-import { FortGraphQl } from "fort-graphql";
-import { buildSchema, GraphQLError } from "graphql";
-export const graphqlSchema = `
-type Query {
-  hello: String
-}
-`;
-
-export class GraphQlController extends FortGraphQl {
-    rootValue = { hello: () => 'Hello world!' };
-
-    // schema 
-    schema = buildSchema(graphqlSchema);
-
-    errorFormatter = function (error: GraphQLError) {
-        // format the error and return it
-        return error;
-    }
- 
- }
+new FortGraphQl().initiate({
+        errorFormatter: function (error: GraphQLError) {
+            // format the error and return it
+            return error;
+        },
+        schema: buildSchema(`
+        type Query {
+          hello: String
+        }
+        ` ),
+        resolver: { hello: () => 'Hello world!' }
+})
 ```
