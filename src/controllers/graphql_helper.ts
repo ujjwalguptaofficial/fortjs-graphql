@@ -11,35 +11,30 @@ export class GraphQlHelper extends Controller {
     }
 
     async  processGraphQl() {
-        try {
-            const queryData = this.request.method === HTTP_METHOD.Post ? this.body : this.query;
-            const params = this.getGraphQLParams_(queryData);
-            const option = Global.graphQlOptionValue;
-            const result = await graphql(
-                option.schema,
-                params.query,
-                option.resolver,
-                option.context,
-                params.variables,
-                params.operationName
-            );
-            // Format any encountered errors.
-            if (result.errors) {
-                if (option.errorFormatter != null) {
-                    result.errors = result.errors.map(option.errorFormatter);
-                }
-                return jsonResult(result, HTTP_STATUS_CODE.BadRequest);
+        const queryData = this.request.method === HTTP_METHOD.Post ? this.body : this.query;
+        const params = this.getGraphQLParams_(queryData);
+        const option = Global.graphQlOptionValue;
+        const result = await graphql(
+            option.schema,
+            params.query,
+            option.resolver,
+            option.context,
+            params.variables,
+            params.operationName
+        );
+        // Format any encountered errors.
+        if (result.errors) {
+            if (option.errorFormatter != null) {
+                result.errors = result.errors.map(option.errorFormatter);
             }
-            else {
-                return jsonResult({
-                    data: result.data
-                });
-            }
+            return jsonResult(result, HTTP_STATUS_CODE.BadRequest);
         }
-        catch (ex) {
-            // throw exception & let user handle this
-            return Promise.reject(ex);
+        else {
+            return jsonResult({
+                data: result.data
+            });
         }
+
     }
 
     private getGraphQLParams_(queryData: { [name: string]: any }): GraphQLParams {
