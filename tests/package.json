@@ -9,7 +9,7 @@
     "lint": "tslint src/**/*.ts",
     "build": "npm run webpack",
     "start": "npm run webpack:watch && opn http://localhost:4000",
-    "install:lib": "npm i ../fortjs-graphql-1.0.1.tgz --no-save",
+    "install:lib": "npm i ../fortjs-graphql-1.1.1.tgz --no-save",
     "install:build": "npm run install:lib && npm run webpack",
     "test": "mocha --recursive --exit",
     "build:test": "npm run build && npm run test",
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
   "dependencies": {
     "eshtml": "^0.2.1",
-    "fortjs": "^1.5.1"
+    "fortjs": "^1.7.2"
   },
   "devDependencies": {
     "@types/node": "^10.12.15",

@@ -1,21 +1,21 @@
 import { StudentService } from "../services/student_service";
 
-var getStudent = function (args) {
-    var id = args.id;
+const getStudent = (args) => {
+    const id = args.id;
     return new StudentService().getStudent(id);
 };
 
-var getStudents = function (args) {
-    var country = args.country;
+const getStudents = (args) => {
+    const country = args.country;
     return new StudentService().getStudentsByCountry(country);
 };
 
 export const resolver = {
     student: getStudent,
-    students: function () {
+    students: () => {
         return new StudentService().students;
     },
-    studentsByContry: function ({ country }) {
+    studentsByContry: ({ country }) => {
         return new StudentService().getStudentsByCountry(country);
     }
 };
