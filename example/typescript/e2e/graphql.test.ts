@@ -8,9 +8,8 @@ const instance = axios.create({
 
 describe('/graphql', () => {
 
-    let app: Fort;
     beforeAll(async () => {
-        app = await createApp() as any;
+        await createApp();
     });
 
     it('query hello', async () => {
@@ -25,7 +24,7 @@ describe('/graphql', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 
 });

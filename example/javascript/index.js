@@ -1,23 +1,41 @@
 import * as path from "path";
-import {
-    App
-} from "./app";
+import { Fort } from "fortjs";
+import { routes } from "./routes";
+import { FortGraphQl } from "fortjs-graphql";
+import { buildSchema } from "graphql";
+
+
+const initGraphQl = async () => {
+    // setup graphql
+    await new FortGraphQl().initiate({
+        errorFormatter: (error) => {
+            // format the error and return it
+            return error;
+        },
+        schema: buildSchema(`
+                type Query {
+                    hello: String
+                }
+            `),
+        resolver: {
+            hello: () => 'Hello world!'
+        }
+    });
+}
 
 export const createApp = async () => {
-    const app = new App();
-    await app.create({
-        folders: [{
-            alias: "/",
-            path: path.join(__dirname, "../static")
-        }]
-    });
-    await app.initGraphQl();
-    return app;
+    Fort.routes = routes;
+    Fort.folders = [{
+        alias: "/",
+        path: path.join(__dirname, "../static")
+    }];
+    await Fort.create();
+    await initGraphQl();
 };
 
 if (process.env.NODE_ENV !== "test") {
     createApp().then(() => {
-        console.log("Your fort is located at address - localhost:4000");
+        Fort.logger.info("Your fort is located at address - localhost:4000");
     }).catch(err => {
         console.error(err);
     });

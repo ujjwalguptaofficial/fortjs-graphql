@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createApp } from "..";
+import { Fort } from "fortjs";
 
 const instance = axios.create({
     baseURL: 'http://localhost:4000/graphql',
@@ -8,9 +9,8 @@ const instance = axios.create({
 
 describe('/graphql', () => {
 
-    let app;
     beforeAll(async () => {
-        app = await createApp();
+        await createApp();
     });
 
     it('query hello', async () => {
@@ -25,7 +25,7 @@ describe('/graphql', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 
 });

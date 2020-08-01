@@ -7,25 +7,17 @@ import { resolver } from './graphql/resolver';
 import { graphqlSchema } from './graphql/graphql_schema';
 import { buildSchema } from 'graphql';
 
-export class App extends Fort {
-    constructor() {
-        super();
-        this.routes = routes;
-        this.viewEngine = FortViewEngine;
-    }
-}
 
-new App().create({
-    defaultPath: "default",
-    folders: [{
-        alias: "/",
-        path: path.join(__dirname, "../static")
-    }]
-}).then(() => {
+Fort.routes = routes;
+Fort.folders = [{
+    alias: "/",
+    path: path.join(__dirname, "../static")
+}]
+Fort.create().then(() => {
     new FortGraphQl().initiate({
         resolver: resolver,
         schema: buildSchema(graphqlSchema)
-    })
+    });
 })
 
 console.log("Your fort is located at address - localhost:4000");

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createApp } from "..";
+import { Fort } from "fortjs";
 const instance = axios.create({
     baseURL: 'http://localhost:4000',
     timeout: 1000
@@ -7,9 +8,8 @@ const instance = axios.create({
 
 describe('/default', () => {
 
-    let app;
     beforeAll(async () => {
-        app = await createApp();
+        await createApp();
     });
 
     it('index', async () => {
@@ -24,7 +24,7 @@ describe('/default', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 
 });

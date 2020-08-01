@@ -9,7 +9,7 @@ export class GraphQlController extends GraphQlHelper {
      * @returns
      * @memberof GraphQlController
      */
-    @DefaultWorker([HTTP_METHOD.Get, HTTP_METHOD.Post])
+    @DefaultWorker(HTTP_METHOD.Get, HTTP_METHOD.Post)
     async  default() {
         return this.processGraphQl();
     }

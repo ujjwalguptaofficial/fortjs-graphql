@@ -8,9 +8,8 @@ const instance = axios.create({
 
 describe('/default', () => {
 
-    let app: Fort;
     beforeAll(async () => {
-        app = await createApp() as any;
+        await createApp()
     });
 
     it('index', async () => {
@@ -25,7 +24,7 @@ describe('/default', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 
 });
